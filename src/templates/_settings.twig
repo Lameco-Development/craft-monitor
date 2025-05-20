@@ -1,0 +1,30 @@
+{# @var plugin \lameco\monitor\Plugin #}
+{# @var settings \lameco\monitor\models\Settings #}
+
+{% import '_includes/forms.twig' as forms %}
+
+<h2>Feed Me</h2>
+{{ forms.editableTableField({
+    name: 'feedme',
+    cols: settings.getFeedmeTableDefinition().columns,
+    rows: settings.feedme,
+    allowAdd: true,
+    allowDelete: true,
+    errors: settings.getErrors('feedme')
+}) }}
+
+<h2>Formie</h2>
+{{ forms.editableTableField({
+    name: 'formie',
+    cols: settings.getFormieTableDefinition().columns,
+    rows: settings.formie,
+    allowAdd: true,
+    allowDelete: true,
+    errors: settings.getErrors('formie')
+}) }}
+
+{{ forms.textField({
+    label: 'Webhook URL',
+    name: 'webhookUrl',
+    value: settings.webhookUrl
+}) }}

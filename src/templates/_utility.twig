@@ -1,0 +1,36 @@
+{% for type, targets in allTargets %}
+    <h2>{{ type|capitalize }}</h2>
+
+    <table class="data fullwidth" style="table-layout: fixed">
+        <thead>
+        <tr>
+            <th>Target</th>
+            <th>Last updated</th>
+            <th>Count <span class="info" data-icon="info">Based on the past 24 hours</span></th>
+            <th>Expected <span class="info" data-icon="info">Based on historical median</span></th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for target in targets %}
+            {% set color = {
+                'OK': 'green',
+                'ALERT': 'red'
+            }[target.status] ?? 'gray' %}
+
+            <tr>
+                <td>{{ target.target }}</td>
+                <td>{{ target.lastUpdated ?? '-' }}</td>
+                <td>{{ target.count }}</td>
+                <td>{{ target.expected ?? '-' }}</td>
+                <td>
+                    <span style="color: {{ color }}; font-weight: bold;">
+                        {{ target.status }}
+                        {% if target.reason %}<span class="info" data-icon="info">{{ target.reason }}</span>{% endif %}
+                    </span>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endfor %}
