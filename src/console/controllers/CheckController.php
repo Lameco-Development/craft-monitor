@@ -13,14 +13,14 @@ class CheckController extends Controller
     public function actionIndex(): int
     {
         $settings = Plugin::getInstance()->getSettings();
-        
-        if (empty($settings->webhookUrl)) {
+
+        if (empty($settings->getWebhookUrl())) {
             $this->stderr('No webhook URL configured. Skipping status check.' . PHP_EOL, Console::FG_YELLOW);
             return ExitCode::OK;
         }
 
         $this->stdout('Checking monitor statuses...' . PHP_EOL);
-        
+
         $targets = Plugin::getInstance()->getMonitorRegistry()->getFlattenedTargets();
         $alerts = [];
 
@@ -36,7 +36,7 @@ class CheckController extends Controller
         }
 
         $this->stdout('Found ' . count($alerts) . ' alerts:' . PHP_EOL, Console::FG_RED);
-        
+
         foreach ($alerts as $alert) {
             $this->stdout(sprintf(
                 '- %s (%s): %s' . PHP_EOL,
@@ -49,7 +49,7 @@ class CheckController extends Controller
         // Send webhook notification
         $client = Craft::createGuzzleClient();
         try {
-            $response = $client->post($settings->webhookUrl, [
+            $response = $client->post($settings->getWebhookUrl(), [
                 'json' => [
                     'site' => [
                         'name' => getenv('SITE_NAME') ?: Craft::$app->getSystemName(),
@@ -81,4 +81,4 @@ class CheckController extends Controller
 
         return ExitCode::UNSPECIFIED_ERROR;
     }
-} 
+}

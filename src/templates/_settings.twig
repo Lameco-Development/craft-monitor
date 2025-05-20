@@ -23,8 +23,9 @@
     errors: settings.getErrors('formie')
 }) }}
 
-{{ forms.textField({
+{{ forms.autosuggestField({
     label: 'Webhook URL',
     name: 'webhookUrl',
-    value: settings.webhookUrl
+    value: settings.webhookUrl,
+    suggestEnvVars: true
 }) }}
