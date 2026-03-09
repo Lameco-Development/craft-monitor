@@ -1,5 +1,6 @@
 {
     "name": "lameco/craft-monitor",
+    "version": "1.0.0",
     "type": "craft-plugin",
     "require": {
         "php": ">=8.2",
