@@ -18,7 +18,7 @@ class MonitorUtility extends Utility
         return 'Laméco Monitor';
     }
 
-    public static function iconPath(): ?string
+    public static function icon(): ?string
     {
         return Craft::getAlias('@appicons/alert.svg');
     }
